@@ -1,0 +1,783 @@
+options:
+  parameters:
+    author: Rein Jaks
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: Direction_finder
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Drone_direction_finder
+    window_size: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: filtri_laius
+  id: variable
+  parameters:
+    comment: ''
+    value: 2*samp_rate/1024
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [71, 642]
+    rotation: 0
+    state: true
+- name: freq3
+  id: variable_function_probe
+  parameters:
+    block_id: blocks_probe_signal_x_0
+    comment: ''
+    function_args: ''
+    function_name: level
+    poll_rate: samp_rate
+    value: 1e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [160, 573]
+    rotation: 0
+    state: true
+- name: gain
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '1'
+    stop: '70'
+    value: '10'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [208, 460]
+    rotation: 0
+    state: true
+- name: sagedus
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: 2400e6
+    step: 1e6
+    stop: 2480e6
+    value: 2440.5e6
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [62, 460]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '32000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 12]
+    rotation: 0
+    state: disabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: 61.44e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [175, 12]
+    rotation: 0
+    state: enabled
+- name: vec
+  id: variable
+  parameters:
+    comment: ''
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1289, -116]
+    rotation: 0
+    state: true
+- name: vector
+  id: variable
+  parameters:
+    comment: ''
+    value: '128'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [78, 575]
+    rotation: 0
+    state: true
+- name: analog_sig_source_x_0
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: ''
+    freq: freq3
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: samp_rate
+    type: complex
+    waveform: analog.GR_SIN_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [36, 192]
+    rotation: 0
+    state: enabled
+- name: band_pass_filter_0_1
+  id: band_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: ''
+    decim: '1'
+    gain: '1'
+    high_cutoff_freq: samp_rate/100+(filtri_laius/2)
+    interp: '1'
+    low_cutoff_freq: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_ccf
+    width: 0.1e6
+    win: firdes.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [529, 54]
+    rotation: 0
+    state: enabled
+- name: band_pass_filter_0_1_0
+  id: band_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: ''
+    decim: '1'
+    gain: '1'
+    high_cutoff_freq: samp_rate/100+(filtri_laius/2)
+    interp: '1'
+    low_cutoff_freq: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_ccf
+    width: 0.1e6
+    win: firdes.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [529, 214]
+    rotation: 0
+    state: enabled
+- name: blocks_add_const_vxx_0
+  id: blocks_add_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: -sagedus
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1022, 528]
+    rotation: 0
+    state: true
+- name: blocks_argmax_xx_0
+  id: blocks_argmax_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '1'
+    type: float
+    vlen: '1024'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [785, 441]
+    rotation: 0
+    state: true
+- name: blocks_complex_to_mag_squared_0
+  id: blocks_complex_to_mag_squared
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1024'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [553, 614]
+    rotation: 0
+    state: true
+- name: blocks_complex_to_magphase_0
+  id: blocks_complex_to_magphase
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [783, 140]
+    rotation: 0
+    state: true
+- name: blocks_complex_to_magphase_0_0
+  id: blocks_complex_to_magphase
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [783, 209]
+    rotation: 0
+    state: true
+- name: blocks_max_xx_0_0
+  id: blocks_max_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '1'
+    type: float
+    vlen: '1024'
+    vlen_out: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [770, 670]
+    rotation: 0
+    state: true
+- name: blocks_multiply_const_vxx_1
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: '-1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1021, 580]
+    rotation: 0
+    state: true
+- name: blocks_multiply_const_xx_0
+  id: blocks_multiply_const_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: 10/gain
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1024'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [553, 670]
+    rotation: 0
+    state: true
+- name: blocks_multiply_xx_0
+  id: blocks_multiply_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [358, 191]
+    rotation: 0
+    state: true
+- name: blocks_multiply_xx_0_0
+  id: blocks_multiply_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [358, 127]
+    rotation: 0
+    state: enabled
+- name: blocks_null_sink_0
+  id: blocks_null_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    bus_structure_sink: '[[0,],]'
+    comment: ''
+    num_inputs: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1077, 22]
+    rotation: 90
+    state: enabled
+- name: blocks_null_sink_0_0
+  id: blocks_null_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    bus_structure_sink: '[[0,],]'
+    comment: ''
+    num_inputs: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1113, 25]
+    rotation: 90
+    state: enabled
+- name: blocks_null_sink_0_1
+  id: blocks_null_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    bus_structure_sink: '[[0,],]'
+    comment: ''
+    num_inputs: '1'
+    type: short
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [817, 401]
+    rotation: 180
+    state: true
+- name: blocks_probe_signal_x_0
+  id: blocks_probe_signal_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1026, 631]
+    rotation: 0
+    state: enabled
+- name: blocks_short_to_float_0
+  id: blocks_short_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: '1'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [785, 517]
+    rotation: 0
+    state: enabled
+- name: blocks_stream_to_vector_0
+  id: blocks_stream_to_vector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_items: '1024'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [553, 426]
+    rotation: 0
+    state: enabled
+- name: blocks_sub_xx_0
+  id: blocks_sub_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    type: float
+    vlen: vec
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1091, 226]
+    rotation: 0
+    state: true
+- name: blocks_udp_sink_0_0
+  id: blocks_udp_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    eof: 'False'
+    ipaddr: 127.0.0.1
+    port: '5006'
+    psize: '1472'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1241, 527]
+    rotation: 0
+    state: enabled
+- name: blocks_udp_sink_0_0_0
+  id: blocks_udp_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    eof: 'False'
+    ipaddr: 127.0.0.1
+    port: '5007'
+    psize: '1472'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1241, 431]
+    rotation: 0
+    state: enabled
+- name: blocks_udp_sink_0_1
+  id: blocks_udp_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    eof: 'False'
+    ipaddr: 127.0.0.1
+    port: '5005'
+    psize: '1472'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1241, 335]
+    rotation: 0
+    state: enabled
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\n\n\nclass blk(gr.sync_block):  # other base classes\
+      \ are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python Block\
+      \ example - a simple multiply const\"\"\"\n\n    def __init__(self):  # only\
+      \ default arguments here\n        \"\"\"arguments to this function show up as\
+      \ parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n            self,\n\
+      \            name='Signal converter',   # will show up in GRC\n            in_sig=[np.float32,np.float32,np.float32],\n\
+      \            out_sig=[np.float32]\n        )\n        # if an attribute with\
+      \ the same name as a parameter is found,\n        # a callback is registered\
+      \ (properties work, too).\n\n    def work(self, input_items, output_items):\n\
+      \        #print(\"in[0]: \", input_items[0][0])\n        #print(\"in[1]: \"\
+      , input_items[1][0])\n        a = 2*np.pi\n        if input_items[0][0] < input_items[1][0]:\n\
+      \            output_items[0][:] = input_items[2][0] + a\n        else:\n   \
+      \       output_items[0][:] = input_items[2][0]\n        #print(output_items[0])\n\
+      \        return len(output_items[0])\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Signal converter', 'blk', [], [('0', 'float', 1), ('1', 'float',
+      1), ('2', 'float', 1)], [('0', 'float', 1)], 'Embedded Python Block example
+      - a simple multiply const', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1222, 178]
+    rotation: 0
+    state: enabled
+- name: epy_block_0_0
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\n\n\nclass blk(gr.sync_block):  # other base classes\
+      \ are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python Block\
+      \ example - a simple multiply const\"\"\"\n\n    def __init__(self, fft_suurus=1024.0,\
+      \ samp_rate=20000000.0, kesksagedus=446000000.0):  # only default arguments\
+      \ here\n\t#, fft_suurus=1024.0, samp_rate=20000000, kesksagedus=446000000\n\
+      \        \"\"\"arguments to this function show up as parameters in GRC\"\"\"\
+      \n        gr.sync_block.__init__(\n            self,\n            name='Pin\
+      \ to frequency',   # will show up in GRC\n            in_sig=[np.float32],\n\
+      \            out_sig=[np.float32]\n        )\n        # if an attribute with\
+      \ the same name as a parameter is found,\n        # a callback is registered\
+      \ (properties work, too).\n        self.fft_suurus = fft_suurus\n        self.samp_rate\
+      \ = samp_rate\n        self.kesksagedus = kesksagedus\n\n    def work(self,\
+      \ input_items, output_items):\n        \"\"\"example: multiply with constant\"\
+      \"\"\n        #k = (self.samp_rate/self.fft_suurus)+self.kesksagedus #Korrutis\n\
+      \        output_items[0][:] = input_items[0] * (self.samp_rate/self.fft_suurus)\
+      \ + self.kesksagedus\n        return len(output_items[0])\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    fft_suurus: '1024'
+    kesksagedus: sagedus
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+  states:
+    _io_cache: ('Pin to frequency', 'blk', [('fft_suurus', '1024.0'), ('samp_rate',
+      '20000000.0'), ('kesksagedus', '446000000.0')], [('0', 'float', 1)], [('0',
+      'float', 1)], 'Embedded Python Block example - a simple multiply const', ['fft_suurus',
+      'kesksagedus', 'samp_rate'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [779, 574]
+    rotation: 0
+    state: enabled
+- name: epy_block_1
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\n\n\nclass blk(gr.sync_block):  # other base classes\
+      \ are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python Block\
+      \ example - a simple multiply const\"\"\"\n\n    def __init__(self, threshold=1.0,\
+      \ output_value=0.0):  # only default arguments here\n        \"\"\"arguments\
+      \ to this function show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n\
+      \            self,\n            name='If threshold',   # will show up in GRC\n\
+      \            in_sig=[np.float32,np.float32],\n            out_sig=[np.float32]\n\
+      \        )\n        # if an attribute with the same name as a parameter is found,\n\
+      \        # a callback is registered (properties work, too).\n        self.threshold\
+      \ = threshold\n        self.output_value = output_value\n\n    def work(self,\
+      \ input_items, output_items):\n        #print(input_items[0])\n        if input_items[0][0]\
+      \ > self.threshold:\n          output_items[0][:] = input_items[1]\n       \
+      \ else:\n          output_items[0][:] = self.output_value\n        #print(output_items[0])\n\
+      \        return len(output_items[0])\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    output_value: sagedus
+    threshold: '1'
+  states:
+    _io_cache: ('If threshold', 'blk', [('threshold', '1.0'), ('output_value', '0.0')],
+      [('0', 'float', 1), ('1', 'float', 1)], [('0', 'float', 1)], 'Embedded Python
+      Block example - a simple multiply const', ['output_value', 'threshold'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1005, 442]
+    rotation: 0
+    state: true
+- name: fft_vxx_0_0
+  id: fft_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    fft_size: '1024'
+    forward: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nthreads: '1'
+    shift: 'False'
+    type: complex
+    window: window.blackmanharris(1024)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [521, 486]
+    rotation: 0
+    state: enabled
+- name: limesdr_source_0
+  id: limesdr_source
+  parameters:
+    affinity: ''
+    alias: ''
+    allow_tcxo_dac: '0'
+    analog_bandw_ch0: samp_rate
+    analog_bandw_ch1: samp_rate
+    calibr_bandw_ch0: 120e6
+    calibr_bandw_ch1: 120e6
+    channel_mode: '2'
+    comment: ''
+    dacVal: '180'
+    digital_bandw_ch0: samp_rate
+    digital_bandw_ch1: samp_rate
+    filename: ''
+    gain_dB_ch0: gain
+    gain_dB_ch1: gain
+    lna_path_ch0: '1'
+    lna_path_ch1: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nco_freq_ch0: '0'
+    nco_freq_ch1: '0'
+    oversample: '0'
+    rf_freq: sagedus
+    samp_rate: samp_rate
+    serial: 0009060B00473622
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 112]
+    rotation: 0
+    state: enabled
+
+connections:
+- [analog_sig_source_x_0, '0', blocks_multiply_xx_0, '1']
+- [analog_sig_source_x_0, '0', blocks_multiply_xx_0_0, '0']
+- [band_pass_filter_0_1, '0', blocks_complex_to_magphase_0, '0']
+- [band_pass_filter_0_1_0, '0', blocks_complex_to_magphase_0_0, '0']
+- [blocks_add_const_vxx_0, '0', blocks_multiply_const_vxx_1, '0']
+- [blocks_argmax_xx_0, '0', blocks_short_to_float_0, '0']
+- [blocks_argmax_xx_0, '1', blocks_null_sink_0_1, '0']
+- [blocks_complex_to_mag_squared_0, '0', blocks_multiply_const_xx_0, '0']
+- [blocks_complex_to_magphase_0, '0', blocks_null_sink_0, '0']
+- [blocks_complex_to_magphase_0, '1', blocks_sub_xx_0, '1']
+- [blocks_complex_to_magphase_0, '1', epy_block_0, '1']
+- [blocks_complex_to_magphase_0_0, '0', blocks_null_sink_0_0, '0']
+- [blocks_complex_to_magphase_0_0, '1', blocks_sub_xx_0, '0']
+- [blocks_complex_to_magphase_0_0, '1', epy_block_0, '0']
+- [blocks_max_xx_0_0, '0', blocks_udp_sink_0_0, '0']
+- [blocks_max_xx_0_0, '0', epy_block_1, '0']
+- [blocks_multiply_const_vxx_1, '0', blocks_probe_signal_x_0, '0']
+- [blocks_multiply_const_xx_0, '0', blocks_argmax_xx_0, '0']
+- [blocks_multiply_const_xx_0, '0', blocks_max_xx_0_0, '0']
+- [blocks_multiply_xx_0, '0', band_pass_filter_0_1_0, '0']
+- [blocks_multiply_xx_0_0, '0', band_pass_filter_0_1, '0']
+- [blocks_short_to_float_0, '0', epy_block_0_0, '0']
+- [blocks_stream_to_vector_0, '0', fft_vxx_0_0, '0']
+- [blocks_sub_xx_0, '0', epy_block_0, '2']
+- [epy_block_0, '0', blocks_udp_sink_0_1, '0']
+- [epy_block_0_0, '0', epy_block_1, '1']
+- [epy_block_1, '0', blocks_add_const_vxx_0, '0']
+- [epy_block_1, '0', blocks_udp_sink_0_0_0, '0']
+- [fft_vxx_0_0, '0', blocks_complex_to_mag_squared_0, '0']
+- [limesdr_source_0, '0', blocks_multiply_xx_0_0, '1']
+- [limesdr_source_0, '1', blocks_multiply_xx_0, '0']
+- [limesdr_source_0, '1', blocks_stream_to_vector_0, '0']
+
+metadata:
+  file_format: 1
